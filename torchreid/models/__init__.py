@@ -16,6 +16,7 @@ from .q2l import *
 from .transformer import *
 from .gcn import *
 from .ml_decoder import *
+from .resnet import *
 
 __model_factory = {
     # image classification models
@@ -33,6 +34,7 @@ __model_factory = {
     'efficientnet_b5': efficientnet_b5b,
     'efficientnet_b6': efficientnet_b6b,
     'efficientnet_b7': efficientnet_b7b,
+    'resnet50': resnet50,
 }
 
 __model_factory = {**__model_factory, **pytcv_wrapped_models, **timm_wrapped_models}
