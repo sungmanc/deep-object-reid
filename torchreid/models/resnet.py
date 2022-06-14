@@ -186,6 +186,7 @@ class ResNet(ModelInterface):
         last_stride=2,
         fc_dims=None,
         dropout_p=None,
+        frozen_stages=-1,
         **kwargs
     ):
         super(ResNet, self).__init__(**kwargs)
@@ -196,6 +197,7 @@ class ResNet(ModelInterface):
         self.feature_dim = 512 * block.expansion
         self.inplanes = 64
         self.dilation = 1
+        self.frozen_stages = frozen_stages
         if replace_stride_with_dilation is None:
             # each element in the tuple indicates if we should replace
             # the 2x2 stride with a dilated convolution instead
@@ -253,6 +255,21 @@ class ResNet(ModelInterface):
                     nn.init.constant_(m.bn3.weight, 0)
                 elif isinstance(m, BasicBlock):
                     nn.init.constant_(m.bn2.weight, 0)
+
+        self._freeze_stages()
+    
+    def _freeze_stages(self):
+        if self.frozen_stages >= 0:
+            self.bn1.eval()
+            for m in [self.conv1, self.bn1]:
+                for param in m.parameters():
+                    param.requires_grad = False
+        
+        for i in range(1, self.frozen_stages + 1):
+            m = getattr(self, f'layer{i}')
+            m.eval()
+            for param in m.parameters():
+                param.requires_grad = False
 
     def _make_layer(self, block, planes, blocks, stride=1, dilate=False):
         norm_layer = self._norm_layer
