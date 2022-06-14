@@ -198,6 +198,7 @@ class ResNet(ModelInterface):
         self.inplanes = 64
         self.dilation = 1
         self.frozen_stages = frozen_stages
+
         if replace_stride_with_dilation is None:
             # each element in the tuple indicates if we should replace
             # the 2x2 stride with a dilated convolution instead
@@ -257,7 +258,7 @@ class ResNet(ModelInterface):
                     nn.init.constant_(m.bn2.weight, 0)
 
         self._freeze_stages()
-    
+
     def _freeze_stages(self):
         if self.frozen_stages >= 0:
             self.bn1.eval()

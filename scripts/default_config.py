@@ -84,6 +84,7 @@ def get_default_config():
     cfg.model.gcn.adj_matrix_path = ''
     cfg.model.gcn.word_model_path = ''
     cfg.model.export_onnx_opset = 9
+    cfg.model.frozen_stages = -1
 
     # mutual learning, auxiliary model
     cfg.mutual_learning = CN()
@@ -502,7 +503,8 @@ def model_kwargs(cfg, num_classes):
         'hidden_dim_scale': cfg.model.gcn.hidden_dim_scale,
         'layer_type': cfg.model.gcn.layer_type,
         'adj_matrix_path': cfg.model.gcn.adj_matrix_path,
-        'word_emb_path': cfg.model.gcn.word_emb_path
+        'word_emb_path': cfg.model.gcn.word_emb_path,
+        'frozen_stages': cfg.model.frozen_stages
     }
 
 
