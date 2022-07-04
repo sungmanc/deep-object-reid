@@ -367,7 +367,7 @@ class ResNet(ModelInterface):
         x = self.layer4(x)
         return x
 
-    def forward(self, x, return_all=False):
+    def forward(self, x, return_all=False, apply_scale=False):
         f = self.featuremaps(x)
         glob_feature = self.global_avgpool(f)
         v = glob_feature.view(glob_feature.size(0), -1)

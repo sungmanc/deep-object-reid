@@ -510,9 +510,9 @@ class Engine(metaclass=abc.ABCMeta):
             # that `two_stepped_transfer_learning` is used together with nncf
             self._unfreeze_aux_models()
 
-        self.two_stepped_transfer_learning(
-            self.epoch, fixbase_epoch, open_layers
-        )
+        #self.two_stepped_transfer_learning(
+        #    self.epoch, fixbase_epoch, open_layers
+        #)
 
         if self._should_freeze_aux_models(self.epoch):
             self._freeze_aux_models()
